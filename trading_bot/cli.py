@@ -24,8 +24,7 @@ from bot.logging_config import setup_logging
 from bot.orders import OrderService
 from bot.validators import validate_order_params
 
-# Initialise logging before anything else
-logger = setup_logging()
+
 
 
 # ------------------------------------------------------------------
@@ -148,6 +147,7 @@ def _print_order_response(result: Dict[str, Any]) -> None:
 
 def main() -> None:
     """Parse CLI arguments, validate, and place the order."""
+    logger = setup_logging()
     parser = _build_parser()
     args = parser.parse_args()
 

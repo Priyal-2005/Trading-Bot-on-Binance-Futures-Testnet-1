@@ -11,6 +11,7 @@ import logging
 from typing import Any, Dict, Optional
 
 from bot.client import BinanceFuturesClient
+from bot.exceptions import OrderError
 
 logger = logging.getLogger("trading_bot.orders")
 
@@ -111,7 +112,7 @@ class OrderService:
             return self._client.create_stop_market_order(symbol, side, quantity, stop_price)  # type: ignore[arg-type]
         else:
             # Should never happen after validation, but guard anyway.
-            raise ValueError(f"Unsupported order type: {order_type}")
+            raise OrderError(f"Unsupported order type: {order_type}")
 
     @staticmethod
     def _format_response(raw: Dict[str, Any]) -> Dict[str, Any]:
@@ -123,18 +124,9 @@ class OrderService:
         Returns:
             A simplified dictionary for display purposes.
         """
-        # Compute average price from fills when available
-        avg_price: str = raw.get("avgPrice", "0")
-        fills = raw.get("fills", [])
-        if fills:
-            total_cost = sum(float(f["price"]) * float(f["qty"]) for f in fills)
-            total_qty = sum(float(f["qty"]) for f in fills)
-            avg_price = f"{total_cost / total_qty:.8f}" if total_qty else avg_price
-
         return {
             "order_id": raw.get("orderId"),
             "status": raw.get("status"),
             "executed_qty": raw.get("executedQty", raw.get("origQty")),
-            "avg_price": avg_price,
-            "raw_response": raw,
+            "avg_price": raw.get("avgPrice", "0"),
         }

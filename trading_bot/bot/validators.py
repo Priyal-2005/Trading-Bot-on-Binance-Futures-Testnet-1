@@ -9,14 +9,15 @@ returns ``None`` on success, keeping the call-site pattern simple:
 from __future__ import annotations
 
 import logging
+import math
 from typing import Optional
 
 from bot.exceptions import ValidationError
 
 logger = logging.getLogger("trading_bot.validators")
 
-VALID_SIDES: set[str] = {"BUY", "SELL"}
-VALID_ORDER_TYPES: set[str] = {"MARKET", "LIMIT", "STOP_MARKET"}
+VALID_SIDES: tuple[str, ...] = ("BUY", "SELL")
+VALID_ORDER_TYPES: tuple[str, ...] = ("LIMIT", "MARKET", "STOP_MARKET")
 
 
 def validate_symbol(symbol: Optional[str]) -> None:
@@ -73,8 +74,8 @@ def validate_quantity(quantity: Optional[float]) -> None:
     Raises:
         ValidationError: If *quantity* is ``None``, zero, or negative.
     """
-    if quantity is None or quantity <= 0:
-        msg = f"Quantity must be a positive number. Got: {quantity}."
+    if quantity is None or not math.isfinite(quantity) or quantity <= 0:
+        msg = f"Quantity must be a finite positive number. Got: {quantity}."
         logger.error(msg)
         raise ValidationError(msg)
 
@@ -93,8 +94,8 @@ def validate_price(price: Optional[float], order_type: str) -> None:
             price.
     """
     if order_type == "LIMIT":
-        if price is None or price <= 0:
-            msg = f"LIMIT orders require a positive price. Got: {price}."
+        if price is None or not math.isfinite(price) or price <= 0:
+            msg = f"LIMIT orders require a finite positive price. Got: {price}."
             logger.error(msg)
             raise ValidationError(msg)
 
@@ -113,8 +114,8 @@ def validate_stop_price(stop_price: Optional[float], order_type: str) -> None:
             non-positive stop price.
     """
     if order_type == "STOP_MARKET":
-        if stop_price is None or stop_price <= 0:
-            msg = f"STOP_MARKET orders require a positive stop price. Got: {stop_price}."
+        if stop_price is None or not math.isfinite(stop_price) or stop_price <= 0:
+            msg = f"STOP_MARKET orders require a finite positive stop price. Got: {stop_price}."
             logger.error(msg)
             raise ValidationError(msg)
 
