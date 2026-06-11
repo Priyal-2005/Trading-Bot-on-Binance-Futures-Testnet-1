@@ -21,7 +21,6 @@ from typing import Any, Dict
 
 from bot.exceptions import TradingBotError
 from bot.logging_config import setup_logging
-from bot.orders import OrderService
 from bot.validators import validate_order_params
 
 
@@ -171,6 +170,8 @@ def main() -> None:
         )
 
         # --- Place order ---
+        from bot.orders import OrderService  # deferred: avoid import crash on --help
+
         service = OrderService()
         result = service.place_order(
             symbol=symbol,
