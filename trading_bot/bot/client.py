@@ -18,9 +18,8 @@ from bot.exceptions import APIConnectionError, AuthenticationError, OrderError
 
 logger = logging.getLogger("trading_bot.client")
 
-# Binance Futures Testnet base URLs
-_FUTURES_TESTNET_URL: str = "https://testnet.binancefuture.com"
-_FUTURES_TESTNET_WS: str = "wss://stream.binancefuture.com"
+# Binance Futures Testnet base URL (must include the /fapi path)
+_FUTURES_TESTNET_URL: str = "https://testnet.binancefuture.com/fapi"
 
 
 class BinanceFuturesClient:
@@ -99,7 +98,7 @@ class BinanceFuturesClient:
             symbol=symbol,
             side=side,
             type="MARKET",
-            quantity=quantity,
+            quantity=str(quantity),
         )
 
     def create_limit_order(
@@ -128,7 +127,7 @@ class BinanceFuturesClient:
             symbol=symbol,
             side=side,
             type="LIMIT",
-            quantity=quantity,
+            quantity=str(quantity),
             price=str(price),
             timeInForce="GTC",
         )
@@ -159,7 +158,7 @@ class BinanceFuturesClient:
             symbol=symbol,
             side=side,
             type="STOP_MARKET",
-            quantity=quantity,
+            quantity=str(quantity),
             stopPrice=str(stop_price),
         )
 
