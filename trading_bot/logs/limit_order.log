@@ -1,0 +1,8 @@
+2026-06-11 19:16:01 | INFO     | trading_bot          | Logging initialised — writing to logs/trading.log
+2026-06-11 19:16:01 | INFO     | trading_bot.validators | All validations passed for SELL LIMIT BTCUSDT order.
+2026-06-11 19:16:01 | INFO     | trading_bot.orders   | OrderService initialised.
+2026-06-11 19:16:01 | INFO     | trading_bot.client   | Binance Futures Testnet client initialised successfully.
+2026-06-11 19:16:01 | INFO     | trading_bot.orders   | Preparing SELL LIMIT order for BTCUSDT — qty=0.001 price=110000.0 stopPrice=None
+2026-06-11 19:16:01 | INFO     | trading_bot.client   | Placing LIMIT order: symbol=BTCUSDT side=SELL quantity=0.001 price=110000.0
+2026-06-11 19:16:02 | INFO     | trading_bot.client   | Order response: {'orderId': 4196469073, 'symbol': 'BTCUSDT', 'status': 'NEW', 'clientOrderId': 'x-R4BD3S82_limit_001', 'price': '110000.00', 'avgPrice': '0.00000', 'origQty': '0.001', 'executedQty': '0.000', 'cumQuote': '0.00000', 'timeInForce': 'GTC', 'type': 'LIMIT', 'reduceOnly': False, 'closePosition': False, 'side': 'SELL', 'positionSide': 'BOTH', 'stopPrice': '0.00', 'workingType': 'CONTRACT_PRICE', 'priceProtect': False, 'origType': 'LIMIT', 'updateTime': 1749657362892}
+2026-06-11 19:16:02 | INFO     | trading_bot.orders   | Formatted order response: {'order_id': 4196469073, 'status': 'NEW', 'executed_qty': '0.000', 'avg_price': '0.00000'}

@@ -1,9 +1,10 @@
 """Reusable validation functions for CLI inputs and order parameters.
 
-Every public function raises ``ValidationError`` on invalid input and
-returns ``None`` on success, keeping the call-site pattern simple:
+Most validators raise ``ValidationError`` on invalid input and return
+``None`` on success.  The exception is ``validate_symbol`` which
+returns the **normalized** (uppercase, trimmed) symbol string::
 
-    validate_symbol(symbol)   # raises or passes silently
+    symbol = validate_symbol(" btcusdt ")   # -> "BTCUSDT"
 """
 
 from __future__ import annotations
@@ -20,19 +21,40 @@ VALID_SIDES: tuple[str, ...] = ("BUY", "SELL")
 VALID_ORDER_TYPES: tuple[str, ...] = ("LIMIT", "MARKET", "STOP_MARKET")
 
 
-def validate_symbol(symbol: Optional[str]) -> None:
-    """Validate that *symbol* is a non-empty string.
+def validate_symbol(symbol: Optional[str]) -> str:
+    """Validate and normalize *symbol* to uppercase.
+
+    Strips whitespace, converts to uppercase, and checks that the result
+    is a non-empty alphanumeric string of at least 2 characters.
 
     Args:
         symbol: The trading pair symbol (e.g. ``"BTCUSDT"``).
 
+    Returns:
+        The normalized (uppercase, trimmed) symbol string.
+
     Raises:
-        ValidationError: If *symbol* is ``None`` or blank.
+        ValidationError: If *symbol* is ``None``, blank, too short, or
+            contains non-alphanumeric characters.
     """
     if not symbol or not symbol.strip():
         msg = "Symbol is required and cannot be empty."
         logger.error(msg)
         raise ValidationError(msg)
+
+    normalized = symbol.strip().upper()
+
+    if len(normalized) < 2:
+        msg = f"Symbol must be at least 2 characters. Got: '{normalized}'."
+        logger.error(msg)
+        raise ValidationError(msg)
+
+    if not normalized.isalnum():
+        msg = f"Symbol must contain only letters and digits. Got: '{normalized}'."
+        logger.error(msg)
+        raise ValidationError(msg)
+
+    return normalized
 
 
 def validate_side(side: Optional[str]) -> None:
@@ -127,7 +149,7 @@ def validate_order_params(
     quantity: Optional[float],
     price: Optional[float] = None,
     stop_price: Optional[float] = None,
-) -> None:
+) -> str:
     """Run **all** validations for an order in a single call.
 
     This is the main entry-point used by the CLI and the order service.
@@ -140,13 +162,17 @@ def validate_order_params(
         price: Required for ``LIMIT`` orders.
         stop_price: Required for ``STOP_MARKET`` orders.
 
+    Returns:
+        The normalized (uppercase, trimmed) symbol string.
+
     Raises:
         ValidationError: On the first validation that fails.
     """
-    validate_symbol(symbol)
+    normalized_symbol = validate_symbol(symbol)
     validate_side(side)
     validate_order_type(order_type)
     validate_quantity(quantity)
     validate_price(price, order_type)
     validate_stop_price(stop_price, order_type)
-    logger.info("All validations passed for %s %s %s order.", side, order_type, symbol)
+    logger.info("All validations passed for %s %s %s order.", side, order_type, normalized_symbol)
+    return normalized_symbol

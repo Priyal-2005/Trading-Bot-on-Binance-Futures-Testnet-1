@@ -9,8 +9,8 @@ __pycache__/
 dist/
 build/
 
-# Logs
-logs/*.log
+# Logs (keep example logs, ignore runtime log)
+logs/trading.log
 
 # Virtual environments
 venv/

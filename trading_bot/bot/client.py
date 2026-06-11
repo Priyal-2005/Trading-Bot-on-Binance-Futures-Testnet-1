@@ -59,9 +59,9 @@ class BinanceFuturesClient:
             self._client = Client(
                 api_key=api_key,
                 api_secret=api_secret,
-                testnet=True,
             )
-            # Override base URLs to point at the Futures Testnet
+            # Point at the Futures Testnet (testnet=True only affects
+            # the Spot URL, so we override FUTURES_URL explicitly).
             self._client.FUTURES_URL = _FUTURES_TESTNET_URL
             logger.info("Binance Futures Testnet client initialised successfully.")
         except Exception as exc:

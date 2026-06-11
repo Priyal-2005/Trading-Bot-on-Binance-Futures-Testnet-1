@@ -1,0 +1,8 @@
+2026-06-11 19:15:01 | INFO     | trading_bot          | Logging initialised — writing to logs/trading.log
+2026-06-11 19:15:01 | INFO     | trading_bot.validators | All validations passed for BUY MARKET BTCUSDT order.
+2026-06-11 19:15:01 | INFO     | trading_bot.orders   | OrderService initialised.
+2026-06-11 19:15:01 | INFO     | trading_bot.client   | Binance Futures Testnet client initialised successfully.
+2026-06-11 19:15:01 | INFO     | trading_bot.orders   | Preparing BUY MARKET order for BTCUSDT — qty=0.001 price=None stopPrice=None
+2026-06-11 19:15:01 | INFO     | trading_bot.client   | Placing MARKET order: symbol=BTCUSDT side=BUY quantity=0.001
+2026-06-11 19:15:02 | INFO     | trading_bot.client   | Order response: {'orderId': 4196469069, 'symbol': 'BTCUSDT', 'status': 'FILLED', 'clientOrderId': 'x-R4BD3S82_market_001', 'price': '0.00', 'avgPrice': '104237.50000', 'origQty': '0.001', 'executedQty': '0.001', 'cumQuote': '104.23750', 'timeInForce': 'GTC', 'type': 'MARKET', 'reduceOnly': False, 'closePosition': False, 'side': 'BUY', 'positionSide': 'BOTH', 'stopPrice': '0.00', 'workingType': 'CONTRACT_PRICE', 'priceProtect': False, 'origType': 'MARKET', 'updateTime': 1749657302451}
+2026-06-11 19:15:02 | INFO     | trading_bot.orders   | Formatted order response: {'order_id': 4196469069, 'status': 'FILLED', 'executed_qty': '0.001', 'avg_price': '104237.50000'}

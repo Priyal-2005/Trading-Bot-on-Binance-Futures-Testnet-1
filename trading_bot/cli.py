@@ -150,8 +150,8 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
-        # --- Validate ---
-        validate_order_params(
+        # --- Validate (returns normalized symbol) ---
+        symbol = validate_order_params(
             symbol=args.symbol,
             side=args.side,
             order_type=args.order_type,
@@ -162,7 +162,7 @@ def main() -> None:
 
         # --- Display request ---
         _print_order_request(
-            symbol=args.symbol,
+            symbol=symbol,
             side=args.side,
             order_type=args.order_type,
             quantity=args.quantity,
@@ -173,7 +173,7 @@ def main() -> None:
         # --- Place order ---
         service = OrderService()
         result = service.place_order(
-            symbol=args.symbol,
+            symbol=symbol,
             side=args.side,
             order_type=args.order_type,
             quantity=args.quantity,
