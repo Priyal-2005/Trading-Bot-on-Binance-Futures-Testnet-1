@@ -1,4 +1,3 @@
-2026-06-11 19:16:01 | INFO     | trading_bot          | Logging initialised — writing to logs/trading.log
 2026-06-11 19:16:01 | INFO     | trading_bot.validators | All validations passed for SELL LIMIT BTCUSDT order.
 2026-06-11 19:16:01 | INFO     | trading_bot.orders   | OrderService initialised.
 2026-06-11 19:16:01 | INFO     | trading_bot.client   | Binance Futures Testnet client initialised successfully.
