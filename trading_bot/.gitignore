@@ -8,6 +8,7 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+*.pyc
 
 # Logs (keep example logs, ignore runtime log)
 logs/trading.log
