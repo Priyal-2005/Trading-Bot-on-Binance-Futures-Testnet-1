@@ -56,7 +56,7 @@ class OrderService:
 
         Returns:
             A dictionary with the keys ``order_id``, ``status``,
-            ``executed_qty``, ``avg_price``, and ``raw_response``.
+            ``executed_qty``, and ``avg_price``.
         """
         logger.info(
             "Preparing %s %s order for %s — qty=%s price=%s stopPrice=%s",

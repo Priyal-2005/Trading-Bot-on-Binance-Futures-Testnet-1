@@ -25,8 +25,6 @@ from bot.orders import OrderService
 from bot.validators import validate_order_params
 
 
-
-
 # ------------------------------------------------------------------
 # CLI argument parsing
 # ------------------------------------------------------------------

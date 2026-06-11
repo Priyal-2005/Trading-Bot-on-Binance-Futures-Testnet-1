@@ -22,10 +22,10 @@ _DATE_FORMAT: str = "%Y-%m-%d %H:%M:%S"
 def setup_logging() -> logging.Logger:
     """Configure and return the root logger for the trading bot.
 
-    Creates the logs directory if it does not exist. Attaches a
-    rotating-friendly file handler (INFO level) and a console handler
-    (WARNING level) so that routine log lines go to the file while only
-    errors and warnings surface on the terminal.
+    Creates the logs directory if it does not exist. Attaches a file
+    handler (INFO level) and a console handler (WARNING level) so that
+    routine log lines go to the file while only errors and warnings
+    surface on the terminal.
 
     Returns:
         logging.Logger: The configured root logger named ``trading_bot``.
